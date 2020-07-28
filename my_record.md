@@ -60,7 +60,17 @@ npm run serve
 
    
 
-   
+
+### 配置打包后文件存放目录
+
+在`vue.config.js`文件中，添加module.exports.outputDir属性。
+
+~~~js
+module.exports = {
+	outputDir: 'dist',
+	//其他配置略
+}
+~~~
 
 
 
@@ -137,7 +147,54 @@ npm install vue-router -save
 
 
 
+#### 引入axios
 
+1. ##### 安装axios
+
+   ```bash
+   npm install axios
+   ```
+
+   
+
+#### 开发环境下解决cors问题(生产上使用nginx解决)
+
+在`vue.config.js`内配置module.exports.devServer字段，如下：
+
+```js
+module.exports = {
+        //省略代码
+		//....
+    
+		//用于开发环境解决cors请求问题
+		devServer: {
+			//代理端口
+			port: '8080',
+			//运行时不自动打开浏览器
+			open: false,
+			proxy: {
+				'/apiserver': {
+					//服务器api地址
+					target: 'http://127.0.0.1:8083/',
+					changeOrigin: true,
+					pathRewrite: {
+						//删除该路径的前缀
+						'^/apiserver': ''
+					}
+				}
+			}
+
+		}
+}
+```
+
+
+
+#### 引入Vuex
+
+```bash
+npm install vuex -save
+```
 
 
 

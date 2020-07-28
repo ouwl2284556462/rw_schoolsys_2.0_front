@@ -13,11 +13,11 @@
 
 			<div class="row login-form-wrapper">
 				<div class="login-form-container col-xs-12">
-					<form action="@{/doLogin.do}" class="login-form" method="post">
+					<form action="@{/doLogin.do}" class="login-form" method="post" @submit.prevent="login">
 
-						<div class="form-group" if="${loginError}">
+						<div class="form-group" v-if="isLoginError">
 							<div class="alert alert-danger">
-								<strong>错误：</strong> 用户名或密码错误
+								<strong>错误：</strong> {{logErrMsg}}
 							</div>
 						</div>
 
@@ -41,8 +41,7 @@
 					</form>
 				</div>
 			</div>
-
-
+			
 			<div class="row login-footer bg-info">
 				<div class="col-xs-12">
 					<h5 class="text-muted  text-center">建议使用Chrome、360浏览器等现代浏览器访问本网站</h5>
@@ -54,7 +53,41 @@
 
 <script>
 	export default {
-		name: 'Login'
+		name: 'Login',
+		data() {
+			return {
+				isLoginError: false,
+				logErrMsg: ""
+			}
+		},
+		methods:{
+			login(event){
+				this.$serverApi.get("login/getToken.do").then(data =>{
+					//设置token
+					let headers = {};
+					headers[data.headerName] = data.token;
+					this.$serverApi.setHeaders(headers);
+					
+					//进行登录
+					this.doLogin(new FormData(event.target));
+				}).catch(err => {
+					this.isLoginError = true;
+					this.logErrMsg = "网络请求失败";
+				});	
+			},
+			
+			//进行登录
+			doLogin(formData){				
+				this.$serverApi.post("doLogin.do", formData).then(data =>{
+					this.isLoginError = false;
+					console.log(data);
+				}).catch(err =>{
+					this.isLoginError = true;
+					this.logErrMsg = "网络请求失败";
+				});
+			}
+			
+		}
 	}
 </script>
 
