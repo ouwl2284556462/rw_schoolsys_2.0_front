@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'qs'
 
 class CommAxios {
 	constructor(baseURL) {
@@ -7,15 +8,15 @@ class CommAxios {
 			withCredentials: false
 		});
 	}
-	
-	setHeaders(h){
+
+	setHeaders(h) {
 		this.headers = h;
 	}
 
 	get(url, param) {
 		return this.__doHttpRequest("GET", url, null, param);
 	}
-	
+
 	post(url, param) {
 		return this.__doHttpRequest("POST", url, param, null);
 	}
@@ -27,7 +28,10 @@ class CommAxios {
 				url,
 				data,
 				params,
-				'headers' : this.headers
+				'headers': this.headers,
+				paramsSerializer: (p) => qs.stringify(p, {
+					indices: false
+				})
 			}).then(res => {
 				resolve(res.data);
 			}).catch(err => {

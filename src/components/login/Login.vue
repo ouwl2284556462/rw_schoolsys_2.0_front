@@ -37,11 +37,12 @@
 							</div>
 						</div>
 
-						<button class="btn btn-primary btn-block btn-lg" type="submit">登录</button>
+						<cbtn class="btn btn-primary btn-block btn-lg" loading-text="登录中..." :showLoading="doingLogin">登录</cbtn>
 					</form>
 				</div>
 			</div>
-			
+
+
 			<div class="row login-footer bg-info">
 				<div class="col-xs-12">
 					<h5 class="text-muted  text-center">建议使用Chrome、360浏览器等现代浏览器访问本网站</h5>
@@ -52,41 +53,91 @@
 </template>
 
 <script>
+	import * as NetConst from 'common/const/NetWorkConst.js'
+
 	export default {
 		name: 'Login',
 		data() {
 			return {
 				isLoginError: false,
-				logErrMsg: ""
+				logErrMsg: "",
+				doingLogin: false,
+				hasGotToken: false
 			}
 		},
-		methods:{
-			login(event){
-				this.$serverApi.get("login/getToken.do").then(data =>{
-					//设置token
-					let headers = {};
-					headers[data.headerName] = data.token;
-					this.$serverApi.setHeaders(headers);
-					
+		methods: {
+			login(event) {
+				//显示登录中
+				this.doingLogin = true;
+
+				//获取默认token
+				if (!this.hasGotToken) {
+					this.$serverApi.get("login/getToken.do").then(res => {
+						if (NetConst.RESP_SUCCESS !== res.code) {
+							this.setErrMsg("帐号密码错误");
+							return;
+						}
+
+						let data = res.data;
+
+						//设置token
+						let headers = {};
+						headers[data.headerName] = data.token;
+						this.$serverApi.setHeaders(headers);
+
+						//设置已获得token
+						this.hasGotToken = true;
+
+						//进行登录
+						this.doLogin(new FormData(event.target));
+					}).catch(err => {
+						this.setErrMsg("网络请求失败");
+						this.hasGotToken = false;
+					}).finally(() => {
+						//恢复按钮可以点击
+						this.doingLogin = false;
+					});
+				} else {
 					//进行登录
 					this.doLogin(new FormData(event.target));
-				}).catch(err => {
-					this.isLoginError = true;
-					this.logErrMsg = "网络请求失败";
-				});	
+				}
 			},
-			
+
 			//进行登录
-			doLogin(formData){				
-				this.$serverApi.post("doLogin.do", formData).then(data =>{
+			doLogin(formData) {
+				this.$serverApi.post("doLogin.do", formData).then(res => {
+					if (NetConst.RESP_SUCCESS !== res.code) {
+						this.setErrMsg("帐号密码错误");
+						return;
+					}
+
+
+
+					let data = res.data;
+					let tokenData = data.csrfToken;
+					//设置登录后的token
+					let headers = {};
+					headers[tokenData.headerName] = tokenData.token;
+					this.$serverApi.setHeaders(headers);
+					this.$store.commit("setUser", data.user);
+
 					this.isLoginError = false;
-					console.log(data);
-				}).catch(err =>{
-					this.isLoginError = true;
-					this.logErrMsg = "网络请求失败";
+					this.setErrMsg(null);
+					this.$router.push("/Workspace");
+				}).catch(err => {
+					this.setErrMsg("帐号密码错误");
+					this.hasGotToken = false;
+				}).finally(() => {
+					//恢复按钮可以点击
+					this.doingLogin = false;
 				});
+			},
+
+			setErrMsg(errMsg) {
+				this.logErrMsg = errMsg;
+				this.isLoginError = errMsg !== null && errMsg !== "";
 			}
-			
+
 		}
 	}
 </script>

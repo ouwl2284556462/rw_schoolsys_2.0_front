@@ -17,8 +17,11 @@ module.exports = {
 			]
 		},
 		chainWebpack: (config) => {
-			config.resolve.alias.set('components', resolve('src/components'))
+			config.resolve.alias
+				.set('components', resolve('src/components'))
 				.set('assets', resolve('src/assets'))
+				.set('common', resolve('src/common'))
+				.set('base', resolve('src/base'))
 		},
 		//用于开发环境解决cors请求问题
 		devServer: {
