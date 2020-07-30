@@ -28,8 +28,8 @@
 </template>
 
 <script>
-	import BaseLayout from 'components/baselayout/BaseLayout.vue'
-	import MainSideNav from 'components/workspace/MainSideNav.vue'
+	import BaseLayout from 'common/components/baselayout/BaseLayout.vue'
+	import MainSideNav from 'common/components/mainlayout/MainSideNav.vue'
 
 	export default {
 		name: 'Workspace',

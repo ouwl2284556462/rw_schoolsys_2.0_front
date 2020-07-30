@@ -1,5 +1,5 @@
 import Vue from "vue"
-import ConfirmWindow from "components/popwindows/confirmwindow/ConfirmWindow.vue"
+import ConfirmWindow from "common/components/popwindows/confirmwindow/ConfirmWindow.vue"
 
 
 const confirmWin = {
@@ -12,6 +12,4 @@ const confirmWin = {
 	}
 };
 
-
-Vue.use(confirmWin);
 export default confirmWin;

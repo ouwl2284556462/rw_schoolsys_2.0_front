@@ -13,7 +13,7 @@
 		props:{
 			itemId: {
 				type: String,
-				require: true
+				required: true
 			},
 			name: String,
 			url: String,
@@ -28,6 +28,7 @@
 		methods:{
 			onLinkClick(){
 				this.$emit("click", {itemId: this.itemId, url: this.url});
+				
 			}
 		}
 	}

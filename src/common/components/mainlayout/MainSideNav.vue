@@ -8,7 +8,7 @@
 </template>
 
 <script>
-	import MainSideNavItem from 'components/workspace/MainSideNavItem.vue'
+	import MainSideNavItem from 'common/components/mainlayout/MainSideNavItem.vue'
 
 	export default{
 		name: 'MainSideNav',

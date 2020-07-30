@@ -1,5 +1,5 @@
 import Vue from "vue"
-import NoticeWindow from "components/popwindows/noticewindow/NoticeWindow.vue"
+import NoticeWindow from "common/components/popwindows/noticewindow/NoticeWindow.vue"
 
 
 const noticeWin = {
@@ -11,9 +11,5 @@ const noticeWin = {
 		Vue.prototype.$noticeWin = noticWin;
 	}
 };
-
-
-
-Vue.use(noticeWin);
 
 export default noticeWin;

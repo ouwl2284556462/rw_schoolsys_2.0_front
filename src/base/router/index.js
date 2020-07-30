@@ -4,7 +4,6 @@ import store from 'base/vuex'
 import * as NetConst from 'common/const/NetWorkConst.js'
 
 
-
 Vue.use(VueRouter);
 
 //重复路由不发送报错信息
@@ -54,6 +53,17 @@ const router = new VueRouter({
 					path: "toCurUserInfo",
 					component: () => import('components/userinfo/UserInfo.vue'),
 					props: (route) => ({user: router.app.$store.state.user})
+				},
+				//修改密码
+				{
+					path: "toChgCurUserPassword",
+					component: () => import('components/passwordchg/PasswordChg.vue'),
+					props: (route) => ({userId: router.app.$store.state.user.id})
+				},
+				//用户管理
+				{
+					path: "toUserManage",
+					component: () => import('components/usermanage/UserManage.vue')
 				}
 			]
 		},
