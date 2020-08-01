@@ -1,6 +1,7 @@
 <template>
 	<main-panel title="用户管理">
-		<keep-alive>
+		<!--只缓存UserManageList -->
+		<keep-alive include="UserManageList">
 			<router-view></router-view>	
 		</keep-alive>
 	</main-panel>

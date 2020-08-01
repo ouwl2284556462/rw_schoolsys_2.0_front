@@ -1,5 +1,5 @@
 <template>
-	<button :disabled="isDisable" @click="onClick">
+	<button :disabled="isDisable" :type="type" @click="onClick">
 		<span v-show="!isShow"><slot></slot></span>
 		<span v-show="isShow">{{loadingText}}</span>
 	</button>
@@ -22,6 +22,10 @@
 			showLoading: {
 				type: Boolean,
 				default: false
+			},
+			type: {
+				type: String,
+				default: "submit"
 			}
 		},
 		watch:{

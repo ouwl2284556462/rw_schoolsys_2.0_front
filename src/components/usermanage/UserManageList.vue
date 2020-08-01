@@ -100,8 +100,8 @@
 			<template v-slot:bottom_btn>
 				<cbtn class="btn btn-success" @click="onAddUserClick">添加用户</cbtn>
 				<cbtn class="btn btn-primary" @click="onChgUserClick">修改信息</cbtn>
-				<cbtn class="btn btn-primary" th:data-target-url="@{/UserManage/toChgPassword.do}">修改密码</cbtn>
-				<cbtn class="btn btn-danger" th:data-target-url="@{/UserManage/deleteUserList.do}">删除用户</cbtn>
+				<cbtn class="btn btn-primary" @click="onChgPassClick">修改密码</cbtn>
+				<cbtn class="btn btn-danger"  @click="onDelUserClick" :showLoading="isDeletingUser">删除用户</cbtn>
 			</template>
 
 
@@ -126,7 +126,8 @@
 				isQrying: false,
 				pageInfo: {},
 				curPageNum: 1,
-				checkedUserIds: []
+				checkedUserIds: [],
+				isDeletingUser: false
 			};
 		},
 		components:{
@@ -187,15 +188,32 @@
 				this.$router.push({path: "toUserDetail", query: {from: 'adminAddUser'}});
 			},
 			
-			onChgUserClick(){
-				let selectedCount = this.checkedUserIds.length;
-				if(selectedCount < 1){
+			//检查是否有选择数据
+			checkHasSelectRowItem(){
+				if(this.checkedUserIds.length < 1){
 					this.$noticeWin.showMsg("请选择");
-					return;
+					return false;
 				}
 				
-				if(selectedCount > 1){
+				return true;
+			},
+			
+			//检查是否只选择了一个
+			checkHasSelectRowSingle(){
+				if(!this.checkHasSelectRowItem()){
+					return false;
+				}
+				
+				if(this.checkedUserIds.length > 1){
 					this.$noticeWin.showMsg("只能选择一条");
+					return false;
+				}
+
+				return true;
+			},
+			
+			onChgUserClick(){
+				if(!this.checkHasSelectRowSingle()){
 					return;
 				}
 				
@@ -211,6 +229,51 @@
 					
 				//切换用户信息界面
 				this.$router.push({path: "toUserDetail", query: {from: 'adminChgInfo', user: targetUserInfo}});
+			},
+			
+			
+			onChgPassClick(){
+				if(!this.checkHasSelectRowSingle()){
+					return;
+				}
+				
+				//切换修改密码界面
+				this.$router.push({path: "toChgPassword", query: {from: 'adminChgInfo', userId: this.checkedUserIds[0]}});
+			},
+			
+			onDelUserClick(){
+				if(!this.checkHasSelectRowItem()){
+					return false;
+				}
+				
+				let param = {confirmCallback: ()=>{
+					//提交删除用户请求
+					this.doDelUser();
+					return true;
+				}}
+				
+				this.$confirmWin.showMsg("删除数据后，将无法恢复，您确定删除？", param);
+			},
+			
+			doDelUser(){
+				this.isDeletingUser = true;
+				
+				let param = {};
+				param.userIds = this.checkedUserIds;
+				this.$serverApi.post("/UserManage/deleteUserList.do", param).then(res => {
+					if (NetConst.RESP_SUCCESS !== res.code) {
+						this.$noticeWin.showMsg(res.data);
+						return;
+					}
+
+					this.qryBtnClick();
+					this.$noticeWin.showMsg("删除成功");
+				}).catch(err => {
+					this.$noticeWin.showMsg("处理失败");
+				}).finally(() => {
+					//恢复按钮
+					this.isDeletingUser = false;
+				});
 			}
 		}
 	}

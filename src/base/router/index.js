@@ -19,7 +19,7 @@ const PasswordChg = () => import('components/passwordchg/PasswordChg.vue');
 const UserManage = () => import('components/usermanage/UserManage.vue');
 const UserManageList = () => import('components/usermanage/UserManageList.vue');
 const UserContent = () => import('components/userinfo/UserContent.vue');
-
+const PasswordChgContent = () => import('components/passwordchg/PasswordChgContent.vue');
 
 const router = new VueRouter({
 	routes: [
@@ -94,6 +94,12 @@ const router = new VueRouter({
 							path: "toUserDetail",
 							component: UserContent,
 							props: (route) => ({from: route.query.from, user: route.query.user})
+						},
+						//修改密码
+						{
+							path: "toChgPassword",
+							component: PasswordChgContent,
+							props: (route) => ({from: route.query.from, userId: route.query.userId})
 						}
 					]
 				}

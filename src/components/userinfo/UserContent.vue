@@ -78,7 +78,7 @@
 			<!--底部按钮 -->
 			<div class="form-group text-center bottom-btn-area">
 				<cbtn id="user-info-dtl-form-submitBtn" type="submit" class="btn btn-primary" :showLoading='isDealing'>{{confirmBtnText}}</cbtn>
-				<cbtn v-if='isAdminAddOrChgUser' id="user-info-dtl-form-returnBtn" class="btn btn-primary" @click.prevent="onBackClick">返回</cbtn>
+				<cbtn v-if='isAdminAddOrChgUser' type="button" id="user-info-dtl-form-returnBtn" class="btn btn-primary"  @click="onBackClick">返回</cbtn>
 			</div>
 		</form>
 </template>
@@ -128,6 +128,11 @@
 			}
 		},
 		components: {
+		},
+		created() {
+			if(null != this.user){
+				this.userInfo = this.user;
+			}
 		},
 		activated() {
 			if(null != this.user){

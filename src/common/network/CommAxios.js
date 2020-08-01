@@ -18,6 +18,11 @@ class CommAxios {
 	}
 
 	post(url, param) {
+		//如果是普通json对象，则需要格式化才能传递参数到后台，否则服务器接受不到
+		if (Object.prototype.toString.call(param) != '[object FormData]') {
+			param = qs.stringify(param, {indices: false})
+		}
+
 		return this.__doHttpRequest("POST", url, param, null);
 	}
 
