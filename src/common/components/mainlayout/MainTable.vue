@@ -17,7 +17,7 @@
 		<main-table-page :page-info="pageInfo" @pagechg="pageChg"></main-table-page>
 
 
-		<div class="main-sub-content-list-operator-btn-list">
+		<div class="main-sub-content-list-operator-btn-list  bottom-btn-area">
 			<slot name="bottom_btn"></slot>
 		</div>
 	</div>

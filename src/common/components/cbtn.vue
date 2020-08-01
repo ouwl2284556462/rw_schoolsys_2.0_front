@@ -32,6 +32,7 @@
 		},
 		methods:{
 			onClick(event){
+				this.$emit("click", event);
 			}
 		}
 	}

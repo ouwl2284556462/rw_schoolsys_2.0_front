@@ -26,7 +26,7 @@ const store = new Vuex.Store({
 		//设置字典枚举值，内部使用
 		__setDictEnums(state, data) {
 			//该请求已完成
-			state.__dictNetRequestState[data.groupId] = null;
+			delete state.__dictNetRequestState[data.groupId];
 			
 			Vue.set(state.dictEnums, data.groupId, data.list);
 		}
@@ -44,7 +44,7 @@ const store = new Vuex.Store({
 			let reqTime = context.state.__dictNetRequestState[groupId];
 			
 			//如果有人在请求该字典，并且请求在5分钟之内，不进行加载
-			if (!ComUtils.isNull(reqTime) && (new Date().getTime() - reqTime) < 300000) {
+			if (!ComUtils.isNull(reqTime) && (new Date().getTime() - reqTime) < 120000) {
 				 return;
 			}
 			

@@ -17,6 +17,12 @@ module.exports = {
 			]
 		},
 		chainWebpack: (config) => {
+			
+			//关闭预加载
+			config.plugins.delete('prefetch');
+			config.plugins.delete('prefetch-index').delete('preload-index');
+
+			
 			config.resolve.alias
 				.set('components', resolve('src/components'))
 				.set('assets', resolve('src/assets'))
