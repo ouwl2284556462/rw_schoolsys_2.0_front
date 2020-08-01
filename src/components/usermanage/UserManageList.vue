@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<div class="row">
-			<form id="user-manage-qry-form" class="form-horizontal" @submit.prevent="onQrySubmit">
-				<input class="form-control" type="hidden" id="user-manage-qry-form-pageNum" name="pageNum" :value="curPageNum" />
+			<form class="form-horizontal" @submit.prevent="onQrySubmit">
+				<input class="form-control" type="hidden" name="pageNum" :value="curPageNum" />
 
 				<div class="form-group">
 					<label class="control-label col-sm-2 " for="account">帐号名：</label>
@@ -78,30 +78,30 @@
 			</template>
 
 			<template v-slot:body>
-				<tr class="user-list-table-row" v-for="user in pageInfo.list" :key="user.id" @click.capture="onUserRowClick(user)">
-					<td class="text-center"><input type="checkbox" :value="user.id"  v-model="checkedUserIds" readonly="readonly"  /></td>
-					<td class="text-center" th:text="${user.accountName}">{{user.accountName}}</td>
-					<td class="text-center" th:text="${user.name}">{{user.name}}</td>
+				<tr v-for="item in pageInfo.list" :key="item.id" @click.capture="onTableRowClick(item)">
+					<td class="text-center"><input type="checkbox" :value="item.id"  v-model="checkedUserIds" readonly="readonly"  /></td>
+					<td class="text-center">{{item.accountName}}</td>
+					<td class="text-center">{{item.name}}</td>
 					<td class="text-center">
-						<dict-trans grpId="sys_role" :val="user.role.name"></dict-trans>
+						<dict-trans grpId="sys_role" :val="item.role.name"></dict-trans>
 					</td>
 					<td class="text-center">
-						<dict-trans grpId="sex" :val="user.sex"></dict-trans>
+						<dict-trans grpId="sex" :val="item.sex"></dict-trans>
 					</td>
-					<td class="text-center" th:text="${user.tel}">{{user.tel}}</td>
+					<td class="text-center">{{item.tel}}</td>
 					<td class="text-center">
-						<dict-trans grpId="identity_type" :val="user.identityType"></dict-trans>
+						<dict-trans grpId="identity_type" :val="item.identityType"></dict-trans>
 					</td>
-					<td class="text-center" th:text="${user.identityNum}">{{user.identityNum}}</td>
+					<td class="text-center">{{item.identityNum}}</td>
 				</tr>
 			</template>
 
 
 			<template v-slot:bottom_btn>
-				<cbtn class="btn btn-success" @click="onAddUserClick">添加用户</cbtn>
-				<cbtn class="btn btn-primary" @click="onChgUserClick">修改信息</cbtn>
-				<cbtn class="btn btn-primary" @click="onChgPassClick">修改密码</cbtn>
-				<cbtn class="btn btn-danger"  @click="onDelUserClick" :showLoading="isDeletingUser">删除用户</cbtn>
+				<cbtn class="btn btn-success" type="button" @click="onAddUserClick">添加用户</cbtn>
+				<cbtn class="btn btn-primary" type="button" @click="onChgUserClick">修改信息</cbtn>
+				<cbtn class="btn btn-primary" type="button" @click="onChgPassClick">修改密码</cbtn>
+				<cbtn class="btn btn-danger" type="button" @click="onDelUserClick" :showLoading="isDeletingUser">删除用户</cbtn>
 			</template>
 
 
@@ -136,6 +136,7 @@
 			DictTrans
 		},
 		activated() {
+			console.log(111);
 			//自动点击查询按钮
 			this.qryBtnClick();
 		},
@@ -174,7 +175,7 @@
 
 			},
 
-			onUserRowClick(user) {
+			onTableRowClick(user) {
 				let isSuccess = ComUtils.arrayRemove(this.checkedUserIds, user.id);
 				if(isSuccess){
 					return;
@@ -185,7 +186,7 @@
 			
 			onAddUserClick(){
 				//切换用户信息界面
-				this.$router.push({path: "toUserDetail", query: {from: 'adminAddUser'}});
+				this.$router.push({path: "/Workspace/toUserManage/toUserDetail", query: {from: 'adminAddUser'}});
 			},
 			
 			//检查是否有选择数据
@@ -228,7 +229,7 @@
 				}
 					
 				//切换用户信息界面
-				this.$router.push({path: "toUserDetail", query: {from: 'adminChgInfo', user: targetUserInfo}});
+				this.$router.push({path: "/Workspace/toUserManage/toUserDetail", query: {from: 'adminChgInfo', user: targetUserInfo}});
 			},
 			
 			
@@ -238,12 +239,12 @@
 				}
 				
 				//切换修改密码界面
-				this.$router.push({path: "toChgPassword", query: {from: 'adminChgInfo', userId: this.checkedUserIds[0]}});
+				this.$router.push({path: "/Workspace/toUserManage/toChgPassword", query: {from: 'adminChgInfo', userId: this.checkedUserIds[0]}});
 			},
 			
 			onDelUserClick(){
 				if(!this.checkHasSelectRowItem()){
-					return false;
+					return;
 				}
 				
 				let param = {confirmCallback: ()=>{

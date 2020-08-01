@@ -21,6 +21,14 @@ const UserManageList = () => import('components/usermanage/UserManageList.vue');
 const UserContent = () => import('components/userinfo/UserContent.vue');
 const PasswordChgContent = () => import('components/passwordchg/PasswordChgContent.vue');
 
+const CourseManage = () => import('components/coursemanage/CourseManage.vue');
+const CourseManageList = () => import('components/coursemanage/CourseManageList.vue');
+const CourseDetail = () => import('components/coursemanage/CourseDetail.vue');
+
+const RoleManage = () => import('components/rolemanage/RoleManage.vue');
+const RoleManageList = () => import('components/rolemanage/RoleManageList.vue');
+const RoleDetail = () => import('components/rolemanage/RoleDetail.vue');
+
 const router = new VueRouter({
 	routes: [
 		//登录页面
@@ -101,6 +109,52 @@ const router = new VueRouter({
 							component: PasswordChgContent,
 							props: (route) => ({from: route.query.from, userId: route.query.userId})
 						}
+					]
+				},
+				//课程管理
+				{
+					path: "toCourseManage",
+					component: CourseManage,
+					children: [
+						//默认跳转到课程列表
+						{
+							path: "",
+							redirect: "toCourseManageList"
+						},
+						//课程列表
+						{
+							path: "toCourseManageList",
+							component: CourseManageList
+						},
+						//用户详情
+						{
+							path: "toCourseDetail",
+							component: CourseDetail,
+							props: (route) => ({from: route.query.from, course: route.query.course})
+						}						
+					]
+				},
+				//角色管理
+				{
+					path: "toRoleManage",
+					component: RoleManage,
+					children: [
+						//默认跳转到课程列表
+						{
+							path: "",
+							redirect: "toRoleManageList"
+						},
+						//课程列表
+						{
+							path: "toRoleManageList",
+							component: RoleManageList
+						},
+						//用户详情
+						{
+							path: "toRoleDetail",
+							component: RoleDetail,
+							props: (route) => ({from: route.query.from, role: route.query.role})
+						}						
 					]
 				}
 			]

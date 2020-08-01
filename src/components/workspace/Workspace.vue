@@ -15,7 +15,7 @@
 			<div class="container">
 				<div class="row">
 					<!--侧边导航 -->
-					<main-side-nav :nav-items="menus"></main-side-nav>
+					<main-side-nav :nav-items="myMenu"></main-side-nav>
 
 					<div class="main-panel col-xs-12  col-sm-8 main-content" id="main-content">
 						<router-view></router-view>
@@ -57,6 +57,12 @@
 		computed: {
 			accountName() {
 				return this.$store.getters.accountName;
+			},
+			
+			//获取当前帐号权限的菜单
+			myMenu(){
+				let privilegesInfo = this.$store.getters.curUserPrivileges;
+				return this.menus.filter( m => m.permission == "" || privilegesInfo[m.permission]);
 			}
 		},
 		methods: {

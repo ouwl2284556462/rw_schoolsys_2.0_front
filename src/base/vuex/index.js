@@ -95,6 +95,30 @@ const store = new Vuex.Store({
 			}
 
 			return accountName;
+		},
+
+		curUserPrivileges(state, getters) {
+			let user = state.user;
+			if (ComUtils.isNull(user)) {
+				return {};
+			}
+			
+			let role = user.role;
+			if (ComUtils.isNull(role)) {
+				return {};
+			}
+			
+			let privileges = role.privileges;
+			if (ComUtils.isNull(privileges)) {
+				return {};
+			}
+			
+			let result = {};
+			for(let p of privileges){
+				result[p.resId + "-" + p.permission] = true;
+			}
+			
+			return result;
 		}
 	}
 });
