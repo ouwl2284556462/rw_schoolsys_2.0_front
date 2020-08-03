@@ -44,7 +44,7 @@
 					{id:"5", name: '用户管理', url: '/Workspace/toUserManage', icon: 'glyphicon-glass', permission: 'userAdmin-all'},
 					{id:"6", name: '我的选课', url: '/Workspace/toStdCourseManage', icon: 'glyphicon-list', permission: 'stdSelectCourse-all'},
 					{id:"7", name: '成绩查询', url: '/Workspace/toScoreQry', icon: 'glyphicon-search', permission: 'scoreQry-all'},
-					{id:"8", name: '我的选课', url: '/Workspace/toTeaCourseManage', icon: 'glyphicon-list', permission: 'tchSelectCourse-all'},
+					{id:"8", name: '我的选课', url: '/Workspace/toTeacherCourse', icon: 'glyphicon-list', permission: 'tchSelectCourse-all'},
 					{id:"9", name: '成绩录入', url: '/Workspace/toScoreImport', icon: 'glyphicon-pencil', permission: 'scoreImport-all'},
 					{id:"10", name: '退出系统', url: '/logout', icon: 'glyphicon-log-out', permission: ''}
 				]

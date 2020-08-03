@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="row">
-			<form class="form-horizontal" th:action="@{/CourseManage/courseModify.do}" @submit.prevent="onFormSubmit">
+			<form class="form-horizontal" @submit.prevent="onFormSubmit">
 				<input type="hidden" name="id" :value="courseInfo.id">
 
 				<div class="form-group">

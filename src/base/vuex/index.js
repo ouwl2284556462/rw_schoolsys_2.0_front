@@ -58,12 +58,13 @@ const store = new Vuex.Store({
 						console.error("获取字典数据失败:" + res.data);
 						return;
 					}
-
+					
 					//缓存到内部
 					context.commit("__setDictEnums", {
 						groupId: groupId,
 						list: res.data
 					});
+					
 				}).catch(err => {
 					console.error("获取字典数据失败:" + err);
 				});

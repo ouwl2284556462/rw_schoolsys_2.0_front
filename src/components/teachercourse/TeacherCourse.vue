@@ -1,7 +1,7 @@
 <template>
-	<main-panel title="角色管理">
-		<!--只缓存CourseManageList -->
-		<keep-alive include="RoleManageList">
+	<main-panel title="我的选课">
+		<!--只缓存TeacherCourseList -->
+		<keep-alive include="TeacherCourseList">
 			<router-view></router-view>	
 		</keep-alive>
 	</main-panel>
@@ -11,7 +11,7 @@
 	import MainPanel from 'common/components/mainlayout/MainPanel.vue'
 	
 	export default{
-		name: "RoleManage",
+		name: "TeacherCourse",
 		components: {
 			MainPanel
 		}

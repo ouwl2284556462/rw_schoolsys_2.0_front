@@ -29,6 +29,11 @@ const RoleManage = () => import('components/rolemanage/RoleManage.vue');
 const RoleManageList = () => import('components/rolemanage/RoleManageList.vue');
 const RoleDetail = () => import('components/rolemanage/RoleDetail.vue');
 
+const TeacherCourse = () => import('components/teachercourse/TeacherCourse.vue');
+const TeacherCourseList = () => import('components/teachercourse/TeacherCourseList.vue');
+const TeacherCourseDetail = () => import('components/teachercourse/TeacherCourseDetail.vue');
+
+
 const router = new VueRouter({
 	routes: [
 		//登录页面
@@ -126,7 +131,7 @@ const router = new VueRouter({
 							path: "toCourseManageList",
 							component: CourseManageList
 						},
-						//用户详情
+						//课程详情
 						{
 							path: "toCourseDetail",
 							component: CourseDetail,
@@ -139,22 +144,39 @@ const router = new VueRouter({
 					path: "toRoleManage",
 					component: RoleManage,
 					children: [
-						//默认跳转到课程列表
 						{
 							path: "",
 							redirect: "toRoleManageList"
 						},
-						//课程列表
 						{
 							path: "toRoleManageList",
 							component: RoleManageList
 						},
-						//用户详情
 						{
 							path: "toRoleDetail",
 							component: RoleDetail,
 							props: (route) => ({from: route.query.from, role: route.query.role})
 						}						
+					]
+				},
+				//教师选课管理
+				{
+					path: "toTeacherCourse",
+					component: TeacherCourse,
+					children: [
+						{
+							path: "",
+							redirect: "toTeacherCourseList"
+						},
+						{
+							path: "toTeacherCourseList",
+							component: TeacherCourseList
+						},
+						{
+							path: "toTeacherCourseDetail",
+							component: TeacherCourseDetail,
+							props: (route) => ({from: route.query.from, teacherCourse: route.query.teacherCourse})
+						}
 					]
 				}
 			]

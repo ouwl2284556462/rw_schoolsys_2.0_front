@@ -21,7 +21,7 @@
 			<div class="form-group">
 				<label class="control-label col-xs-3 col-sm-2 col-sm-offset-1 required" for="sex">性别</label>
 				<div class="col-xs-8 col-sm-6">
-					<cselect class="form-control" id="sex" name="sex" dictGrpId='sex' :isRequire="true" :val="userInfo.sex">
+					<cselect class="form-control" id="sex" name="sex" dictGrpId='sex' :isRequire="true" v-model="userInfo.sex">
 					</cselect>
 				</div>
 			</div>
@@ -39,7 +39,7 @@
 				<label class="control-label col-xs-3 col-sm-2 col-sm-offset-1 required" for="identityType">证件类型</label>
 				<div class="col-xs-8 col-sm-6">
 					<cselect class="form-control" id="identityType" name="identityType" dictGrpId='identity_type'  :isRequire="true"
-					 :val="userInfo.identityType">
+					 v-model="userInfo.identityType">
 					</cselect>
 				</div>
 			</div>
@@ -54,7 +54,7 @@
 			<div class="form-group" v-if='isAdminAddOrChgUser'>
 				<label class="control-label col-xs-3 col-sm-2 col-sm-offset-1 required" for="role">角色</label>
 				<div class="col-xs-8 col-sm-6">
-					<cselect class="form-control" id="role" name="role.name"   dictGrpId='sys_role' :isRequire="true" :val="userInfo.role.name">
+					<cselect class="form-control" id="role" name="role.name"   dictGrpId='sys_role' :isRequire="true" v-model="userInfo.role.name">
 					</cselect>
 				</div>
 			</div>
