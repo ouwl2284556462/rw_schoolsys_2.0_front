@@ -87,7 +87,6 @@
 				const cbParam = {};
 				cbParam.cmpInst = cmpInst;
 				
-				this.msg = null;
 				this.isOkBtnClick = false;
 				if (param == null) {
 					param = {}
@@ -99,7 +98,7 @@
 				}
 
 
-				this.confirmWin.unbind('hide.bs.modal').on('hide.bs.modal', () => {
+				this.confirmWin.unbind('hide.bs.modal').on('hide.bs.modal', (event) => {
 					//如果是点了确定按钮关闭的，则不处理
 					if (this.isOkBtnClick) {
 						return;

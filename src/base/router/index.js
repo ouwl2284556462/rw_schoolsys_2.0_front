@@ -33,6 +33,14 @@ const TeacherCourse = () => import('components/teachercourse/TeacherCourse.vue')
 const TeacherCourseList = () => import('components/teachercourse/TeacherCourseList.vue');
 const TeacherCourseDetail = () => import('components/teachercourse/TeacherCourseDetail.vue');
 
+const ScoreImportManage = () => import('components/scoreimport/ScoreImportManage.vue');
+const ScoreList = () => import('components/scoreimport/ScoreList.vue');
+
+const ScoreQryManage = () => import('components/scoreqry/ScoreQryManage.vue');
+const ScoreQryList = () => import('components/scoreqry/ScoreQryList.vue');
+
+const StudentCourse = () => import('components/studentcourse/StudentCourse.vue');
+const StudentCourseList = () => import('components/studentcourse/StudentCourseList.vue');
 
 const router = new VueRouter({
 	routes: [
@@ -176,6 +184,51 @@ const router = new VueRouter({
 							path: "toTeacherCourseDetail",
 							component: TeacherCourseDetail,
 							props: (route) => ({from: route.query.from, teacherCourse: route.query.teacherCourse})
+						}
+					]
+				},
+				//成绩导入
+				{
+					path: "toScoreImport",
+					component: ScoreImportManage,
+					children: [
+						{
+							path: "",
+							redirect: "toScoreList"
+						},
+						{
+							path: "toScoreList",
+							component: ScoreList
+						}
+					]
+				},
+				//成绩查询
+				{
+					path: "toScoreQry",
+					component: ScoreQryManage,
+					children: [
+						{
+							path: "",
+							redirect: "toScoreQryList"
+						},
+						{
+							path: "toScoreQryList",
+							component: ScoreQryList
+						}
+					]
+				},
+				//学生选课
+				{
+					path: "toStudentCourse",
+					component: StudentCourse,
+					children: [
+						{
+							path: "",
+							redirect: "toStudentCourseList"
+						},
+						{
+							path: "toStudentCourseList",
+							component: StudentCourseList
 						}
 					]
 				}

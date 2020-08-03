@@ -41,7 +41,7 @@
 				</div>
 
 				<div class="form-group" th:if="'teacherChgCourse' == ${from}">
-					<label class="control-label col-xs-3 col-sm-2 col-sm-offset-1" for="courseStatus">状态</label>
+					<label class="control-label col-xs-3 col-sm-2 col-sm-offset-1 required" for="courseStatus">状态</label>
 					<div class="col-xs-8 col-sm-6">
 						<cselect class="form-control" id="courseStatus" name="status" dictGrpId='course_status' :isRequire="true" v-model="teacherCourseInfo.status">
 						</cselect>
@@ -118,10 +118,6 @@
 					this.$noticeWin.showMsg("请选择课程");
 					return;
 				}
-
-
-
-
 
 				this.isDealing = true;
 				let formData = new FormData(event.target);

@@ -66,16 +66,8 @@
 					return;
 				}
 				
-				let targetId = this.$refs.tableCmp.getSelectRowIds()[0];
-				let targetInfo = null;
-				
-				for(let info of this.$refs.tableCmp.getPageList()){
-					if(targetId == info.id){
-						targetInfo = info;
-						break;
-					}
-				}
 
+				let targetInfo =this.$refs.tableCmp.getCheckboxSelectedItemInfoOnlyOne();
 				this.$router.push({path: "/Workspace/toRoleManage/toRoleDetail", query: {role: targetInfo, from: "adminChgRole"}});
 			},
 

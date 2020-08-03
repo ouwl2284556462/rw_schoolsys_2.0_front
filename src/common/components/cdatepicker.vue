@@ -13,7 +13,7 @@
 			format: String,
 			//优先使用这个，暂时只有year，以后需要再加
 			formatType: String,
-			value: String
+			value: String | Number
 		},
 		mounted() {
 			let option = {
@@ -33,6 +33,10 @@
 			
 			$(this.$refs.inputItem).datepicker(option).on("changeDate", e => {
 				this.$emit("dateChg", e.target.value);
+			}).on('hide', e => {
+				//防止其他模态窗口关闭
+				e.preventDefault();
+				e.stopPropagation();
 			});
 		}
 	}

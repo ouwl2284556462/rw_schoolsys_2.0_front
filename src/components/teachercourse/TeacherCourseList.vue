@@ -8,7 +8,7 @@
 			
 			<label class="control-label col-sm-2 " for="teachselcourse-manage-courseYear">学年：</label>
 			<div class="col-sm-3" >
-				<cdatepicker class="form-control" name="year" formatType="year" ></cdatepicker>
+				<cdatepicker class="form-control" id="teachselcourse-manage-courseYear" name="year" formatType="year" ></cdatepicker>
 			</div>
 		</template>
 		
@@ -87,17 +87,9 @@
 					return;
 				}
 				
-				let targetId = this.$refs.tableCmp.getSelectRowIds()[0];
-				let targetInfo = null;
-				
-				for(let info of this.$refs.tableCmp.getPageList()){
-					if(targetId == info.id){
-						targetInfo = info;
-						break;
-					}
-				}
-
-				this.$router.push({path: "/Workspace/toRoleManage/toRoleDetail", query: {role: targetInfo, from: "adminChgRole"}});
+		
+				let targetInfo = this.$refs.tableCmp.getCheckboxSelectedItemInfoOnlyOne();
+				this.$router.push({path: "/Workspace/toTeacherCourse/toTeacherCourseDetail", query: {teacherCourse: targetInfo, from: "adminChgTeacherCourse"}});
 			},
 
 			onDelClick() {
@@ -108,7 +100,7 @@
 				let param = {confirmCallback: ()=>{
 					this.doDel();
 					return true;
-				}}
+				}};
 				
 				this.$confirmWin.showMsg("删除数据后，将无法恢复，您确定删除？", param);
 			},
@@ -118,7 +110,7 @@
 				
 				let param = {};
 				param.ids = this.$refs.tableCmp.getSelectRowIds();
-				this.$serverApi.post("/RoleManage/toDelRole.do", param).then(res => {
+				this.$serverApi.post("/TeacherSelectCourse/toDelCourse.do", param).then(res => {
 					if (NetConst.RESP_SUCCESS !== res.code) {
 						this.$noticeWin.showMsg(res.data);
 						return;

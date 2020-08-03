@@ -142,16 +142,16 @@
 					return;
 				}
 				
-
+				const itemId = this.setRowRowIdStrategy(item);
 				if(this.rowSelectType == 'radio'){
-					this.selectedId = item.id;
+					this.selectedId = itemId;
 				}else if(this.rowSelectType == 'checkbox'){
-					let isSuccess = ComUtils.arrayRemove(this.checkedIds, item.id);
+					let isSuccess = ComUtils.arrayRemove(this.checkedIds, itemId);
 					if (isSuccess) {
 						return;
 					}
 					
-					this.checkedIds.push(item.id);
+					this.checkedIds.push(itemId);
 				}
 			},
 
@@ -222,7 +222,51 @@
 				}
 
 				return true;
+			},
+			
+			
+			getRadioSelectedItemInfo(){
+				const selectId = this.getRadioSelectRowId();
+				if(ComUtils.isStrEmpty(selectId)){
+					return null;
+				}
+				
+				const list = this.getPageList();
+				if(ComUtils.isNull(list)){
+					return null;
+				}
+				
+				for(const item of list){
+					if(this.setRowRowIdStrategy(item) == selectId){
+						return item;
+					}
+				}
+				
+				return null;
+			},
+						
+						
+			getCheckboxSelectedItemInfoOnlyOne(){
+				const ids = this.getSelectRowIds();
+				if(ComUtils.isNull(ids)){
+					return null;
+				}
+				
+				const list = this.getPageList();
+				if(ComUtils.isNull(list)){
+					return null;
+				}
+				
+				let targetId = ids[0];
+				for(let info of list){
+					if(targetId == this.setRowRowIdStrategy(info)){
+						return info;
+					}
+				}
+				
+				return null;
 			}
+
 		}
 	}
 </script>

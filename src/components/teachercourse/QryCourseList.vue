@@ -42,19 +42,7 @@
 			},
 			
 			getSelectItem(){
-				const selectId = this.$refs.tableCmp.getRadioSelectRowId();
-				if(ComUtils.isStrEmpty(selectId)){
-					return null;
-				}
-				
-				const list = this.$refs.tableCmp.getPageList();
-				for(const item of list){
-					if(item.id == selectId){
-						return item;
-					}
-				}
-				
-				return null;
+				return this.$refs.tableCmp.getRadioSelectedItemInfo();
 			}
 		}
 	}
