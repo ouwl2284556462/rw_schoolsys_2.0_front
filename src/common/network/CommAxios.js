@@ -7,6 +7,8 @@ class CommAxios {
 			baseURL,
 			withCredentials: false
 		});
+		
+		this.headers = {};
 	}
 
 	setHeaders(h) {
